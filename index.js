@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const routes = require('./routes');
+const sequelize = require('./config/db');
 
 // Middleware
 app.use(express.json());
