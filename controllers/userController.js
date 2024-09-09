@@ -1,13 +1,16 @@
 const { User, Role, Customer } = require('../models');
+const bcrypt = require('bcrypt');
 
 exports.createUser = async (req, res) => {
   try {
     const { roleId, email, password } = req.body;
-    
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
     const newUser = await User.create({
       roleId,
       email,
-      password
+      password: hashedPassword
     });
 
     return res.status(201).json(newUser);
@@ -63,7 +66,11 @@ exports.updateUser = async (req, res) => {
 
     user.roleId = roleId || user.roleId;
     user.email = email || user.email;
-    user.password = password || user.password;
+
+    if (password) {
+      const hashedPassword = await bcrypt.hash(password, 10);
+      user.password = hashedPassword;
+    }
 
     await user.save();
 
