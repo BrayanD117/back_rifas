@@ -2,14 +2,14 @@ const express = require('express');
 const router = express.Router();
 const SelectedNumberController = require('../controllers/selectedNumberController');
 
-router.post('/selected-numbers', SelectedNumberController.createSelectedNumber);
+router.post('/', SelectedNumberController.createSelectedNumber);
 
-router.get('/selected-numbers', SelectedNumberController.getAllSelectedNumbers);
+router.get('/', SelectedNumberController.getAllSelectedNumbers);
 
-router.get('/selected-numbers/:id', SelectedNumberController.getSelectedNumberById);
+router.get('/:id', SelectedNumberController.getSelectedNumberById);
 
-router.put('/selected-numbers/:id', SelectedNumberController.updateSelectedNumber);
+router.put('/:id', SelectedNumberController.updateSelectedNumber);
 
-router.delete('/selected-numbers/:id', SelectedNumberController.deleteSelectedNumber);
+router.delete('/:id', SelectedNumberController.deleteSelectedNumber);
 
 module.exports = router;

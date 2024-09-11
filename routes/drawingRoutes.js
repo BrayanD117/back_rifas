@@ -2,14 +2,14 @@ const express = require('express');
 const router = express.Router();
 const DrawingController = require('../controllers/drawingController');
 
-router.post('/drawings', DrawingController.createDrawing);
+router.post('/', DrawingController.createDrawing);
 
-router.get('/drawings', DrawingController.getAllDrawings);
+router.get('/', DrawingController.getAllDrawings);
 
-router.get('/drawings/:id', DrawingController.getDrawingById);
+router.get('/:id', DrawingController.getDrawingById);
 
-router.put('/drawings/:id', DrawingController.updateDrawing);
+router.put('/:id', DrawingController.updateDrawing);
 
-router.delete('/drawings/:id', DrawingController.deleteDrawing);
+router.delete('/:id', DrawingController.deleteDrawing);
 
 module.exports = router;

@@ -2,14 +2,14 @@ const express = require('express');
 const router = express.Router();
 const RaffleController = require('../controllers/raffleController');
 
-router.post('/raffles', RaffleController.createRaffle);
+router.post('/', RaffleController.createRaffle);
 
-router.get('/raffles', RaffleController.getAllRaffles);
+router.get('/', RaffleController.getAllRaffles);
 
-router.get('/raffles/:id', RaffleController.getRaffleById);
+router.get('/:id', RaffleController.getRaffleById);
 
-router.put('/raffles/:id', RaffleController.updateRaffle);
+router.put('/:id', RaffleController.updateRaffle);
 
-router.delete('/raffles/:id', RaffleController.deleteRaffle);
+router.delete('/:id', RaffleController.deleteRaffle);
 
 module.exports = router;

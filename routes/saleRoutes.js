@@ -2,14 +2,14 @@ const express = require('express');
 const router = express.Router();
 const SaleController = require('../controllers/saleController');
 
-router.post('/sales', SaleController.createSale);
+router.post('/', SaleController.createSale);
 
-router.get('/sales', SaleController.getAllSales);
+router.get('/', SaleController.getAllSales);
 
-router.get('/sales/:id', SaleController.getSaleById);
+router.get('/:id', SaleController.getSaleById);
 
-router.put('/sales/:id', SaleController.updateSale);
+router.put('/:id', SaleController.updateSale);
 
-router.delete('/sales/:id', SaleController.deleteSale);
+router.delete('/:id', SaleController.deleteSale);
 
 module.exports = router;

@@ -2,14 +2,14 @@ const express = require('express');
 const router = express.Router();
 const DrawTypeController = require('../controllers/drawTypeController');
 
-router.post('/draw-types', DrawTypeController.createDrawType);
+router.post('/', DrawTypeController.createDrawType);
 
-router.get('/draw-types', DrawTypeController.getAllDrawTypes);
+router.get('/', DrawTypeController.getAllDrawTypes);
 
-router.get('/draw-types/:id', DrawTypeController.getDrawTypeById);
+router.get('/:id', DrawTypeController.getDrawTypeById);
 
-router.put('/draw-types/:id', DrawTypeController.updateDrawType);
+router.put('/:id', DrawTypeController.updateDrawType);
 
-router.delete('/draw-types/:id', DrawTypeController.deleteDrawType);
+router.delete('/:id', DrawTypeController.deleteDrawType);
 
 module.exports = router;

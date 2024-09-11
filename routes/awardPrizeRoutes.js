@@ -2,14 +2,14 @@ const express = require('express');
 const router = express.Router();
 const AwardPrizeController = require('../controllers/awardPrizeController');
 
-router.post('/award-prizes', AwardPrizeController.createAwardPrize);
+router.post('/', AwardPrizeController.createAwardPrize);
 
-router.get('/award-prizes', AwardPrizeController.getAllAwardPrizes);
+router.get('/', AwardPrizeController.getAllAwardPrizes);
 
-router.get('/award-prizes/:id', AwardPrizeController.getAwardPrizeById);
+router.get('/:id', AwardPrizeController.getAwardPrizeById);
 
-router.put('/award-prizes/:id', AwardPrizeController.updateAwardPrize);
+router.put('/:id', AwardPrizeController.updateAwardPrize);
 
-router.delete('/award-prizes/:id', AwardPrizeController.deleteAwardPrize);
+router.delete('/:id', AwardPrizeController.deleteAwardPrize);
 
 module.exports = router;
