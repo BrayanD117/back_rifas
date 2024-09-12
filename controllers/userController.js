@@ -40,6 +40,11 @@ exports.createUser = async (req, res) => {
   try {
     const { email, password } = req.body;
 
+    const existingUser = await User.findOne({ where: { email } });
+    if (existingUser) {
+      return res.status(400).json({ error: 'El correo ya está registrado' });
+    }
+
     const role = await Role.findOne({ where: { name: 'USUARIO' } });
     if (!role) {
       return res.status(500).json({ error: 'No se encontró el rol USUARIO' });
