@@ -1,13 +1,19 @@
 const express = require('express');
 const app = express();
+const cors = require('cors');
 const routes = require('./routes');
 const sequelize = require('./config/db');
 
 // Middleware
 app.use(express.json());
 
+app.use(cors({
+  origin: 'http://localhost:3000', // Dirección de tu frontend
+  credentials: true, // Permitir cookies
+}));
+
 // Routes
-app.use('/', routes);
+app.use('/api', routes);
 
 // Port
 const PORT = process.env.SERVER_PORT || 3000;
