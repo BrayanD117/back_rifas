@@ -8,8 +8,8 @@ const sequelize = require('./config/db');
 app.use(express.json());
 
 app.use(cors({
-  origin: 'http://localhost:3000', // Dirección de tu frontend
-  credentials: true, // Permitir cookies
+  origin: 'http://localhost:3000',
+  credentials: true,
 }));
 
 // Routes
