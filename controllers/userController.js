@@ -1,23 +1,4 @@
 const { User, Role, Customer } = require('../models');
-const bcrypt = require('bcrypt');
-
-exports.createUser = async (req, res) => {
-  try {
-    const { roleId, email, password } = req.body;
-
-    const hashedPassword = await bcrypt.hash(password, 10);
-
-    const newUser = await User.create({
-      roleId,
-      email,
-      password: hashedPassword
-    });
-
-    return res.status(201).json(newUser);
-  } catch (error) {
-    return res.status(500).json({ error: 'Error creando el usuario', details: error.message });
-  }
-};
 
 exports.getAllUsers = async (req, res) => {
   try {

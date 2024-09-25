@@ -18,6 +18,7 @@ const drawTypeRoutes = require('../routes/drawTypeRoutes');
 const drawingRoutes = require('../routes/drawingRoutes');
 const prizeRoutes = require('../routes/prizeRoutes');
 const awardPrizeRoutes = require('../routes/awardPrizeRoutes');
+const authRoutes = require('../routes/authRoutes');
 
 router.use('/roles', roleRoutes);
 router.use('/users', userRoutes);
@@ -36,5 +37,6 @@ router.use('/draw-types', drawTypeRoutes);
 router.use('/drawings', drawingRoutes);
 router.use('/prizes', prizeRoutes);
 router.use('/award-prizes', awardPrizeRoutes);
+router.use('/auth', authRoutes);
 
 module.exports = router;
