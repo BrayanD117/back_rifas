@@ -1,10 +1,12 @@
 const express = require('express');
 const app = express();
 const cors = require('cors');
+const cookieParser = require('cookie-parser'); 
 const routes = require('./routes');
 const sequelize = require('./config/db');
 
 // Middleware
+app.use(cookieParser());
 app.use(express.json());
 
 app.use(cors({
