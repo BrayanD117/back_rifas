@@ -35,7 +35,8 @@ module.exports = (sequelize, DataTypes) => {
     },
     gameDate: DataTypes.DATE,
     closeDate: DataTypes.DATE,
-    expirationDate: DataTypes.DATE
+    expirationDate: DataTypes.DATE,
+    imageUrl: DataTypes.TEXT
   }, {
     sequelize,
     modelName: 'Raffle',

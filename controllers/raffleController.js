@@ -2,7 +2,7 @@ const { Raffle, Coverage, Authority } = require('../models');
 
 exports.createRaffle = async (req, res) => {
   try {
-    const { coverageId, authorityId, name, description, prize, baseValue, ivaValue, totalValue, lottery, numberDigits, numberSeries, bearerCheck, gameDate, closeDate, expirationDate } = req.body;
+    const { coverageId, authorityId, name, description, prize, baseValue, ivaValue, totalValue, lottery, numberDigits, numberSeries, bearerCheck, gameDate, closeDate, expirationDate, imageUrl } = req.body;
 
     const newRaffle = await Raffle.create({
       coverageId,
@@ -19,7 +19,8 @@ exports.createRaffle = async (req, res) => {
       bearerCheck,
       gameDate,
       closeDate,
-      expirationDate
+      expirationDate,
+      imageUrl
     });
 
     return res.status(201).json(newRaffle);
@@ -65,7 +66,7 @@ exports.getRaffleById = async (req, res) => {
 exports.updateRaffle = async (req, res) => {
   try {
     const { id } = req.params;
-    const { coverageId, authorityId, name, description, prize, baseValue, ivaValue, totalValue, lottery, numberDigits, numberSeries, bearerCheck, gameDate, closeDate, expirationDate } = req.body;
+    const { coverageId, authorityId, name, description, prize, baseValue, ivaValue, totalValue, lottery, numberDigits, numberSeries, bearerCheck, gameDate, closeDate, expirationDate, imageUrl } = req.body;
 
     const raffle = await Raffle.findByPk(id);
 
@@ -88,6 +89,7 @@ exports.updateRaffle = async (req, res) => {
     raffle.gameDate = gameDate || raffle.gameDate;
     raffle.closeDate = closeDate || raffle.closeDate;
     raffle.expirationDate = expirationDate || raffle.expirationDate;
+    raffle.imageUrl = imageUrl || raffle.imageUrl
 
     await raffle.save();
 
