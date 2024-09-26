@@ -1,4 +1,5 @@
 const { User, Role, Customer } = require('../models');
+const { formatDatesToColombiaTime } = require('../utils/dateService');
 
 exports.getAllUsers = async (req, res) => {
   try {
@@ -8,7 +9,9 @@ exports.getAllUsers = async (req, res) => {
         { model: Customer, attributes: ['name', 'documentNumber'] }
       ]
     });
-    return res.status(200).json(users);
+
+    const formattedUsers = users.map(user => formatDatesToColombiaTime(user));
+    return res.status(200).json(formattedUsers);
   } catch (error) {
     return res.status(500).json({ error: 'Error obteniendo los usuarios', details: error.message });
   }
@@ -28,7 +31,8 @@ exports.getUserById = async (req, res) => {
       return res.status(404).json({ error: 'Usuario no encontrado' });
     }
 
-    return res.status(200).json(user);
+    const formattedUser = formatDatesToColombiaTime(user);
+    return res.status(200).json(formattedUser);
   } catch (error) {
     return res.status(500).json({ error: 'Error obteniendo el usuario', details: error.message });
   }
@@ -55,7 +59,8 @@ exports.updateUser = async (req, res) => {
 
     await user.save();
 
-    return res.status(200).json(user);
+    const formattedUser = formatDatesToColombiaTime(user);
+    return res.status(200).json(formattedUser);
   } catch (error) {
     return res.status(500).json({ error: 'Error actualizando el usuario', details: error.message });
   }

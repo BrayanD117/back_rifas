@@ -1,4 +1,5 @@
 const { AwardPrize, Customer, Prize } = require('../models');
+const { formatDatesToColombiaTime } = require('../utils/dateService');
 
 exports.createAwardPrize = async (req, res) => {
   try {
@@ -10,7 +11,8 @@ exports.createAwardPrize = async (req, res) => {
       deliveryDate
     });
 
-    return res.status(201).json(newAwardPrize);
+    const formattedAwardPrize = formatDatesToColombiaTime(newAwardPrize);
+    return res.status(201).json(formattedAwardPrize);
   } catch (error) {
     return res.status(500).json({ error: 'Error creando la entrega de premio', details: error.message });
   }
@@ -24,7 +26,8 @@ exports.getAllAwardPrizes = async (req, res) => {
         { model: Prize, attributes: ['name'] }
       ]
     });
-    return res.status(200).json(awardPrizes);
+    const formattedAwardPrizes = awardPrizes.map(awardPrize => formatDatesToColombiaTime(awardPrize));
+    return res.status(200).json(formattedAwardPrizes);
   } catch (error) {
     return res.status(500).json({ error: 'Error obteniendo las entregas de premios', details: error.message });
   }
@@ -44,7 +47,8 @@ exports.getAwardPrizeById = async (req, res) => {
       return res.status(404).json({ error: 'Entrega de premio no encontrada' });
     }
 
-    return res.status(200).json(awardPrize);
+    const formattedAwardPrize = formatDatesToColombiaTime(awardPrize);
+    return res.status(200).json(formattedAwardPrize);
   } catch (error) {
     return res.status(500).json({ error: 'Error obteniendo la entrega de premio', details: error.message });
   }
@@ -67,7 +71,8 @@ exports.updateAwardPrize = async (req, res) => {
 
     await awardPrize.save();
 
-    return res.status(200).json(awardPrize);
+    const formattedAwardPrize = formatDatesToColombiaTime(awardPrize);
+    return res.status(200).json(formattedAwardPrize);
   } catch (error) {
     return res.status(500).json({ error: 'Error actualizando la entrega de premio', details: error.message });
   }

@@ -1,4 +1,5 @@
 const { Prize, Drawing } = require('../models');
+const { formatDatesToColombiaTime } = require('../utils/dateService');
 
 exports.createPrize = async (req, res) => {
   try {
@@ -10,7 +11,8 @@ exports.createPrize = async (req, res) => {
       description
     });
 
-    return res.status(201).json(newPrize);
+    const formattedPrize = formatDatesToColombiaTime(newPrize);
+    return res.status(201).json(formattedPrize);
   } catch (error) {
     return res.status(500).json({ error: 'Error creando el premio', details: error.message });
   }
@@ -23,7 +25,9 @@ exports.getAllPrizes = async (req, res) => {
         { model: Drawing, attributes: ['description'] }
       ]
     });
-    return res.status(200).json(prizes);
+
+    const formattedPrizes = prizes.map(prize => formatDatesToColombiaTime(prize));
+    return res.status(200).json(formattedPrizes);
   } catch (error) {
     return res.status(500).json({ error: 'Error obteniendo los premios', details: error.message });
   }
@@ -42,7 +46,8 @@ exports.getPrizeById = async (req, res) => {
       return res.status(404).json({ error: 'Premio no encontrado' });
     }
 
-    return res.status(200).json(prize);
+    const formattedPrize = formatDatesToColombiaTime(prize);
+    return res.status(200).json(formattedPrize);
   } catch (error) {
     return res.status(500).json({ error: 'Error obteniendo el premio', details: error.message });
   }
@@ -65,7 +70,8 @@ exports.updatePrize = async (req, res) => {
 
     await prize.save();
 
-    return res.status(200).json(prize);
+    const formattedPrize = formatDatesToColombiaTime(prize);
+    return res.status(200).json(formattedPrize);
   } catch (error) {
     return res.status(500).json({ error: 'Error actualizando el premio', details: error.message });
   }

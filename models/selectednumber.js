@@ -15,6 +15,12 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   SelectedNumber.init({
+    id: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+      allowNull: false,
+      primaryKey: true
+    },
     transactionId: DataTypes.UUID,
     number: DataTypes.INTEGER,
     numberStatusId: DataTypes.UUID

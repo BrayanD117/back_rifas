@@ -6,6 +6,8 @@ router.post('/', RaffleController.createRaffle);
 
 router.get('/', RaffleController.getAllRaffles);
 
+router.get('/active', RaffleController.getActiveRaffles);
+
 router.get('/:id', RaffleController.getRaffleById);
 
 router.put('/:id', RaffleController.updateRaffle);

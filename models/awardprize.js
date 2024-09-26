@@ -15,6 +15,12 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   AwardPrize.init({
+    id: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+      allowNull: false,
+      primaryKey: true
+    },
     customerId: DataTypes.UUID,
     prizeId: DataTypes.UUID,
     deliveryDate: DataTypes.DATEONLY

@@ -1,10 +1,12 @@
 const { Role } = require('../models');
+const { formatDatesToColombiaTime } = require('../utils/dateService');
 
 exports.createRole = async (req, res) => {
   try {
     const { name } = req.body;
     const newRole = await Role.create({ name });
-    return res.status(201).json(newRole);
+    const formattedRole = formatDatesToColombiaTime(newRole);
+    return res.status(201).json(formattedRole);
   } catch (error) {
     return res.status(500).json({ error: 'Error creando el rol', details: error.message });
   }
@@ -28,7 +30,8 @@ exports.getRoleById = async (req, res) => {
       return res.status(404).json({ error: 'Rol no encontrado' });
     }
 
-    return res.status(200).json(role);
+    const formattedRole = formatDatesToColombiaTime(role);
+    return res.status(200).json(formattedRole);
   } catch (error) {
     return res.status(500).json({ error: 'Error obteniendo el rol', details: error.message });
   }
@@ -48,7 +51,8 @@ exports.updateRole = async (req, res) => {
     role.name = name;
     await role.save();
 
-    return res.status(200).json(role);
+    const formattedRole = formatDatesToColombiaTime(role);
+    return res.status(200).json(formattedRole);
   } catch (error) {
     return res.status(500).json({ error: 'Error actualizando el rol', details: error.message });
   }

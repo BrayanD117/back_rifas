@@ -17,6 +17,12 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Drawing.init({
+    id: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+      allowNull: false,
+      primaryKey: true
+    },
     raffleId: DataTypes.UUID,
     drawTypeId: DataTypes.UUID,
     drawDate: DataTypes.DATE,
