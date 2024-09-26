@@ -1,4 +1,5 @@
 const { DrawType } = require('../models');
+const { formatDatesToColombiaTime } = require('../utils/dateService');
 
 exports.createDrawType = async (req, res) => {
   try {
@@ -6,7 +7,8 @@ exports.createDrawType = async (req, res) => {
 
     const newDrawType = await DrawType.create({ name });
 
-    return res.status(201).json(newDrawType);
+    const formattedNewDrawType = formatDatesToColombiaTime(newDrawType);
+    return res.status(201).json(formattedNewDrawType);
   } catch (error) {
     return res.status(500).json({ error: 'Error creando el tipo de sorteo', details: error.message });
   }
@@ -15,7 +17,9 @@ exports.createDrawType = async (req, res) => {
 exports.getAllDrawTypes = async (req, res) => {
   try {
     const drawTypes = await DrawType.findAll();
-    return res.status(200).json(drawTypes);
+    const formattedDrawTypes = drawTypes.map(drawType => formatDatesToColombiaTime(drawType));
+    
+    return res.status(200).json(formattedDrawTypes);
   } catch (error) {
     return res.status(500).json({ error: 'Error obteniendo los tipos de sorteo', details: error.message });
   }
@@ -30,7 +34,8 @@ exports.getDrawTypeById = async (req, res) => {
       return res.status(404).json({ error: 'Tipo de sorteo no encontrado' });
     }
 
-    return res.status(200).json(drawType);
+    const formattedDrawType = formatDatesToColombiaTime(drawType);
+    return res.status(200).json(formattedDrawType);
   } catch (error) {
     return res.status(500).json({ error: 'Error obteniendo el tipo de sorteo', details: error.message });
   }
@@ -50,7 +55,8 @@ exports.updateDrawType = async (req, res) => {
     drawType.name = name || drawType.name;
     await drawType.save();
 
-    return res.status(200).json(drawType);
+    const formattedDrawType = formatDatesToColombiaTime(drawType);
+    return res.status(200).json(formattedDrawType);
   } catch (error) {
     return res.status(500).json({ error: 'Error actualizando el tipo de sorteo', details: error.message });
   }

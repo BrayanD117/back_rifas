@@ -14,6 +14,12 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   NumberStatus.init({
+    id: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+      allowNull: false,
+      primaryKey: true
+    },
     name: DataTypes.STRING
   }, {
     sequelize,

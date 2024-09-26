@@ -1,4 +1,5 @@
 const { Transaction, Customer, Raffle, TransactionStatus } = require('../models');
+const { formatDatesToColombiaTime } = require('../utils/dateService');
 
 exports.createTransaction = async (req, res) => {
   try {
@@ -14,7 +15,8 @@ exports.createTransaction = async (req, res) => {
       purchaseDate
     });
 
-    return res.status(201).json(newTransaction);
+    const formattedTransaction = formatDatesToColombiaTime(newTransaction);
+    return res.status(201).json(formattedTransaction);
   } catch (error) {
     return res.status(500).json({ error: 'Error creando la transacción', details: error.message });
   }
@@ -29,7 +31,9 @@ exports.getAllTransactions = async (req, res) => {
         { model: TransactionStatus, attributes: ['name'] }
       ]
     });
-    return res.status(200).json(transactions);
+
+    const formattedTransactions = transactions.map(transaction => formatDatesToColombiaTime(transaction));
+    return res.status(200).json(formattedTransactions);
   } catch (error) {
     return res.status(500).json({ error: 'Error obteniendo las transacciones', details: error.message });
   }
@@ -50,7 +54,8 @@ exports.getTransactionById = async (req, res) => {
       return res.status(404).json({ error: 'Transacción no encontrada' });
     }
 
-    return res.status(200).json(transaction);
+    const formattedTransaction = formatDatesToColombiaTime(transaction);
+    return res.status(200).json(formattedTransaction);
   } catch (error) {
     return res.status(500).json({ error: 'Error obteniendo la transacción', details: error.message });
   }
@@ -77,7 +82,8 @@ exports.updateTransaction = async (req, res) => {
 
     await transaction.save();
 
-    return res.status(200).json(transaction);
+    const formattedTransaction = formatDatesToColombiaTime(transaction);
+    return res.status(200).json(formattedTransaction);
   } catch (error) {
     return res.status(500).json({ error: 'Error actualizando la transacción', details: error.message });
   }

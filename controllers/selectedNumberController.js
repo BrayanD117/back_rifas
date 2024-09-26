@@ -1,4 +1,5 @@
 const { SelectedNumber, Transaction, NumberStatus } = require('../models');
+const { formatDatesToColombiaTime } = require('../utils/dateService');
 
 exports.createSelectedNumber = async (req, res) => {
   try {
@@ -10,7 +11,8 @@ exports.createSelectedNumber = async (req, res) => {
       numberStatusId
     });
 
-    return res.status(201).json(newSelectedNumber);
+    const formattedSelectedNumber = formatDatesToColombiaTime(newSelectedNumber);
+    return res.status(201).json(formattedSelectedNumber);
   } catch (error) {
     return res.status(500).json({ error: 'Error creando el número seleccionado', details: error.message });
   }
@@ -24,7 +26,8 @@ exports.getAllSelectedNumbers = async (req, res) => {
         { model: NumberStatus, attributes: ['name'] }
       ]
     });
-    return res.status(200).json(selectedNumbers);
+    const formattedSelectedNumbers = selectedNumbers.map(selectedNumber => formatDatesToColombiaTime(selectedNumber));
+    return res.status(200).json(formattedSelectedNumbers);
   } catch (error) {
     return res.status(500).json({ error: 'Error obteniendo los números seleccionados', details: error.message });
   }
@@ -44,7 +47,8 @@ exports.getSelectedNumberById = async (req, res) => {
       return res.status(404).json({ error: 'Número seleccionado no encontrado' });
     }
 
-    return res.status(200).json(selectedNumber);
+    const formattedSelectedNumber = formatDatesToColombiaTime(selectedNumber);
+    return res.status(200).json(formattedSelectedNumber);
   } catch (error) {
     return res.status(500).json({ error: 'Error obteniendo el número seleccionado', details: error.message });
   }
@@ -67,7 +71,8 @@ exports.updateSelectedNumber = async (req, res) => {
 
     await selectedNumber.save();
 
-    return res.status(200).json(selectedNumber);
+    const formattedSelectedNumber = formatDatesToColombiaTime(selectedNumber);
+    return res.status(200).json(formattedSelectedNumber);
   } catch (error) {
     return res.status(500).json({ error: 'Error actualizando el número seleccionado', details: error.message });
   }

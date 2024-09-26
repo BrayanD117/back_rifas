@@ -1,4 +1,5 @@
 const { Customer, User } = require('../models');
+const { formatDatesToColombiaTime } = require('../utils/dateService');
 
 exports.createCustomer = async (req, res) => {
   try {
@@ -13,7 +14,8 @@ exports.createCustomer = async (req, res) => {
       email
     });
 
-    return res.status(201).json(newCustomer);
+    const formattedCustomer = formatDatesToColombiaTime(newCustomer);
+    return res.status(201).json(formattedCustomer);
   } catch (error) {
     return res.status(500).json({ error: 'Error creando el cliente', details: error.message });
   }
@@ -26,7 +28,9 @@ exports.getAllCustomers = async (req, res) => {
         { model: User, attributes: ['email'] }
       ]
     });
-    return res.status(200).json(customers);
+
+    const formattedCustomers = customers.map(customer => formatDatesToColombiaTime(customer));
+    return res.status(200).json(formattedCustomers);
   } catch (error) {
     return res.status(500).json({ error: 'Error obteniendo los clientes', details: error.message });
   }
@@ -45,7 +49,8 @@ exports.getCustomerById = async (req, res) => {
       return res.status(404).json({ error: 'Cliente no encontrado' });
     }
 
-    return res.status(200).json(customer);
+    const formattedCustomer = formatDatesToColombiaTime(customer);
+    return res.status(200).json(formattedCustomer);
   } catch (error) {
     return res.status(500).json({ error: 'Error obteniendo el cliente', details: error.message });
   }
@@ -71,7 +76,8 @@ exports.updateCustomer = async (req, res) => {
 
     await customer.save();
 
-    return res.status(200).json(customer);
+    const formattedCustomer = formatDatesToColombiaTime(customer);
+    return res.status(200).json(formattedCustomer);
   } catch (error) {
     return res.status(500).json({ error: 'Error actualizando el cliente', details: error.message });
   }

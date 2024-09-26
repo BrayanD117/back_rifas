@@ -1,4 +1,5 @@
 const { Coverage } = require('../models');
+const { formatDatesToColombiaTime } = require('../utils/dateService');
 
 exports.createCoverage = async (req, res) => {
   try {
@@ -6,7 +7,8 @@ exports.createCoverage = async (req, res) => {
 
     const newCoverage = await Coverage.create({ name });
 
-    return res.status(201).json(newCoverage);
+    const formattedCoverage = formatDatesToColombiaTime(newCoverage);
+    return res.status(201).json(formattedCoverage);
   } catch (error) {
     return res.status(500).json({ error: 'Error creando la cobertura', details: error.message });
   }
@@ -15,7 +17,9 @@ exports.createCoverage = async (req, res) => {
 exports.getAllCoverages = async (req, res) => {
   try {
     const coverages = await Coverage.findAll();
-    return res.status(200).json(coverages);
+
+    const formattedCoverages = coverages.map(coverage => formatDatesToColombiaTime(coverage));
+    return res.status(200).json(formattedCoverages);
   } catch (error) {
     return res.status(500).json({ error: 'Error obteniendo las coberturas', details: error.message });
   }
@@ -30,7 +34,8 @@ exports.getCoverageById = async (req, res) => {
       return res.status(404).json({ error: 'Cobertura no encontrada' });
     }
 
-    return res.status(200).json(coverage);
+    const formattedCoverage = formatDatesToColombiaTime(coverage);
+    return res.status(200).json(formattedCoverage);
   } catch (error) {
     return res.status(500).json({ error: 'Error obteniendo la cobertura', details: error.message });
   }
@@ -50,7 +55,8 @@ exports.updateCoverage = async (req, res) => {
     coverage.name = name || coverage.name;
     await coverage.save();
 
-    return res.status(200).json(coverage);
+    const formattedCoverage = formatDatesToColombiaTime(coverage);
+    return res.status(200).json(formattedCoverage);
   } catch (error) {
     return res.status(500).json({ error: 'Error actualizando la cobertura', details: error.message });
   }

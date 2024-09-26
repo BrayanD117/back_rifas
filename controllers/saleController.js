@@ -1,4 +1,5 @@
 const { Sale, Transaction } = require('../models');
+const { formatDatesToColombiaTime } = require('../utils/dateService');
 
 exports.createSale = async (req, res) => {
   try {
@@ -12,7 +13,8 @@ exports.createSale = async (req, res) => {
       totalValue
     });
 
-    return res.status(201).json(newSale);
+    const formattedSale = formatDatesToColombiaTime(newSale);
+    return res.status(201).json(formattedSale);
   } catch (error) {
     return res.status(500).json({ error: 'Error creando la venta', details: error.message });
   }
@@ -25,13 +27,13 @@ exports.getAllSales = async (req, res) => {
         { model: Transaction, attributes: ['orderNumber'] }
       ]
     });
-    return res.status(200).json(sales);
+    const formattedSales = sales.map(sale => formatDatesToColombiaTime(sale));
+    return res.status(200).json(formattedSales);
   } catch (error) {
     return res.status(500).json({ error: 'Error obteniendo las ventas', details: error.message });
   }
 };
 
-// Obtener Sale por ID
 exports.getSaleById = async (req, res) => {
   try {
     const { id } = req.params;
@@ -45,7 +47,8 @@ exports.getSaleById = async (req, res) => {
       return res.status(404).json({ error: 'Venta no encontrada' });
     }
 
-    return res.status(200).json(sale);
+    const formattedSale = formatDatesToColombiaTime(sale);
+    return res.status(200).json(formattedSale);
   } catch (error) {
     return res.status(500).json({ error: 'Error obteniendo la venta', details: error.message });
   }
@@ -70,7 +73,8 @@ exports.updateSale = async (req, res) => {
 
     await sale.save();
 
-    return res.status(200).json(sale);
+    const formattedSale = formatDatesToColombiaTime(sale);
+    return res.status(200).json(formattedSale);
   } catch (error) {
     return res.status(500).json({ error: 'Error actualizando la venta', details: error.message });
   }
