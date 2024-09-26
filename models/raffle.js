@@ -6,7 +6,6 @@ const dayjs = require('dayjs');
 const timezone = require('dayjs/plugin/timezone');
 const utc = require('dayjs/plugin/utc');
 
-// Extender dayjs con los plugins necesarios
 dayjs.extend(utc);
 dayjs.extend(timezone);
 
@@ -50,9 +49,9 @@ module.exports = (sequelize, DataTypes) => {
     gameDate: DataTypes.DATE,
     closeDate: DataTypes.DATE,
     expirationDate: DataTypes.DATE,
-    imageUrl: DataTypes.TEXT,
     active: DataTypes.BOOLEAN,
-    dateTimePublication: DataTypes.DATE
+    dateTimePublication: DataTypes.DATE,
+    imageUrl: DataTypes.ARRAY(DataTypes.TEXT),
   }, {
     sequelize,
     modelName: 'Raffle',
