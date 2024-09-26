@@ -1,4 +1,5 @@
 const { EventType } = require('../models');
+const { formatDatesToColombiaTime } = require('../utils/dateService');
 
 exports.createEventType = async (req, res) => {
   try {
@@ -6,7 +7,8 @@ exports.createEventType = async (req, res) => {
 
     const newEventType = await EventType.create({ name });
 
-    return res.status(201).json(newEventType);
+    const formattedEventType = formatDatesToColombiaTime(newEventType);
+    return res.status(201).json(formattedEventType);
   } catch (error) {
     return res.status(500).json({ error: 'Error creando el tipo de evento', details: error.message });
   }
@@ -15,7 +17,8 @@ exports.createEventType = async (req, res) => {
 exports.getAllEventTypes = async (req, res) => {
   try {
     const eventTypes = await EventType.findAll();
-    return res.status(200).json(eventTypes);
+    const formattedEventTypes = eventTypes.map(eventType => formatDatesToColombiaTime(eventType));
+    return res.status(200).json(formattedEventTypes);
   } catch (error) {
     return res.status(500).json({ error: 'Error obteniendo los tipos de eventos', details: error.message });
   }
@@ -30,7 +33,8 @@ exports.getEventTypeById = async (req, res) => {
       return res.status(404).json({ error: 'Tipo de evento no encontrado' });
     }
 
-    return res.status(200).json(eventType);
+    const formattedEventType = formatDatesToColombiaTime(eventType);
+    return res.status(200).json(formattedEventType);
   } catch (error) {
     return res.status(500).json({ error: 'Error obteniendo el tipo de evento', details: error.message });
   }
@@ -50,7 +54,8 @@ exports.updateEventType = async (req, res) => {
     eventType.name = name || eventType.name;
     await eventType.save();
 
-    return res.status(200).json(eventType);
+    const formattedEventType = formatDatesToColombiaTime(eventType);
+    return res.status(200).json(formattedEventType);
   } catch (error) {
     return res.status(500).json({ error: 'Error actualizando el tipo de evento', details: error.message });
   }

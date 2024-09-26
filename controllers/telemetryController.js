@@ -1,4 +1,5 @@
 const { Telemetry, User, Raffle, EventType } = require('../models');
+const { formatDatesToColombiaTime } = require('../utils/dateService');
 
 exports.createTelemetry = async (req, res) => {
   try {
@@ -11,7 +12,8 @@ exports.createTelemetry = async (req, res) => {
       ubication
     });
 
-    return res.status(201).json(newTelemetry);
+    const formattedTelemetry = formatDatesToColombiaTime(newTelemetry);
+    return res.status(201).json(formattedTelemetry);
   } catch (error) {
     return res.status(500).json({ error: 'Error creando la telemetría', details: error.message });
   }
@@ -26,7 +28,9 @@ exports.getAllTelemetries = async (req, res) => {
         { model: EventType, attributes: ['name'] }
       ]
     });
-    return res.status(200).json(telemetries);
+
+    const formattedTelemetries = telemetries.map(telemetry => formatDatesToColombiaTime(telemetry));
+    return res.status(200).json(formattedTelemetries);
   } catch (error) {
     return res.status(500).json({ error: 'Error obteniendo las telemetrías', details: error.message });
   }
@@ -47,7 +51,8 @@ exports.getTelemetryById = async (req, res) => {
       return res.status(404).json({ error: 'Telemetría no encontrada' });
     }
 
-    return res.status(200).json(telemetry);
+    const formattedTelemetry = formatDatesToColombiaTime(telemetry);
+    return res.status(200).json(formattedTelemetry);
   } catch (error) {
     return res.status(500).json({ error: 'Error obteniendo la telemetría', details: error.message });
   }
@@ -71,7 +76,8 @@ exports.updateTelemetry = async (req, res) => {
 
     await telemetry.save();
 
-    return res.status(200).json(telemetry);
+    const formattedTelemetry = formatDatesToColombiaTime(telemetry);
+    return res.status(200).json(formattedTelemetry);
   } catch (error) {
     return res.status(500).json({ error: 'Error actualizando la telemetría', details: error.message });
   }

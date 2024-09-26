@@ -1,4 +1,5 @@
 const { NumberStatus } = require('../models');
+const { formatDatesToColombiaTime } = require('../utils/dateService');
 
 exports.createNumberStatus = async (req, res) => {
   try {
@@ -6,7 +7,8 @@ exports.createNumberStatus = async (req, res) => {
 
     const newNumberStatus = await NumberStatus.create({ name });
 
-    return res.status(201).json(newNumberStatus);
+    const formattedNumberStatus = formatDatesToColombiaTime(newNumberStatus);
+    return res.status(201).json(formattedNumberStatus);
   } catch (error) {
     return res.status(500).json({ error: 'Error creando el estado del número', details: error.message });
   }
@@ -15,7 +17,8 @@ exports.createNumberStatus = async (req, res) => {
 exports.getAllNumberStatuses = async (req, res) => {
   try {
     const numberStatuses = await NumberStatus.findAll();
-    return res.status(200).json(numberStatuses);
+    const formattedNumberStatuses = numberStatuses.map(numberStatus => formatDatesToColombiaTime(numberStatus));
+    return res.status(200).json(formattedNumberStatuses);
   } catch (error) {
     return res.status(500).json({ error: 'Error obteniendo los estados de números', details: error.message });
   }
@@ -30,7 +33,8 @@ exports.getNumberStatusById = async (req, res) => {
       return res.status(404).json({ error: 'Estado de número no encontrado' });
     }
 
-    return res.status(200).json(numberStatus);
+    const formattedNumberStatus = formatDatesToColombiaTime(numberStatus);
+    return res.status(200).json(formattedNumberStatus);
   } catch (error) {
     return res.status(500).json({ error: 'Error obteniendo el estado del número', details: error.message });
   }
@@ -50,7 +54,8 @@ exports.updateNumberStatus = async (req, res) => {
     numberStatus.name = name || numberStatus.name;
     await numberStatus.save();
 
-    return res.status(200).json(numberStatus);
+    const formattedNumberStatus = formatDatesToColombiaTime(numberStatus);
+    return res.status(200).json(formattedNumberStatus);
   } catch (error) {
     return res.status(500).json({ error: 'Error actualizando el estado del número', details: error.message });
   }

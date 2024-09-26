@@ -16,6 +16,12 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Prize.init({
+    id: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+      allowNull: false,
+      primaryKey: true
+    },
     drawingId: DataTypes.UUID,
     name: DataTypes.STRING,
     description: DataTypes.STRING
