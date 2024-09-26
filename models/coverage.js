@@ -2,6 +2,14 @@
 const {
   Model
 } = require('sequelize');
+const dayjs = require('dayjs');
+const timezone = require('dayjs/plugin/timezone');
+const utc = require('dayjs/plugin/utc');
+
+// Extender dayjs con los plugins necesarios
+dayjs.extend(utc);
+dayjs.extend(timezone);
+
 module.exports = (sequelize, DataTypes) => {
   class Coverage extends Model {
     /**
@@ -14,6 +22,12 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Coverage.init({
+    id: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+      allowNull: false,
+      primaryKey: true
+    },
     name: DataTypes.STRING
   }, {
     sequelize,

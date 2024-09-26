@@ -1,4 +1,5 @@
 const { Authority } = require('../models');
+const { formatDatesToColombiaTime } = require('../utils/dateService');
 
 exports.createAuthority = async (req, res) => {
   try {
@@ -6,7 +7,8 @@ exports.createAuthority = async (req, res) => {
 
     const newAuthority = await Authority.create({ name });
 
-    return res.status(201).json(newAuthority);
+    const formattedAuthority = formatDatesToColombiaTime(newAuthority);
+    return res.status(201).json(formattedAuthority);
   } catch (error) {
     return res.status(500).json({ error: 'Error creando la autoridad', details: error.message });
   }
@@ -15,7 +17,8 @@ exports.createAuthority = async (req, res) => {
 exports.getAllAuthorities = async (req, res) => {
   try {
     const authorities = await Authority.findAll();
-    return res.status(200).json(authorities);
+    const formattedAuthorities = authorities.map(authority => formatDatesToColombiaTime(authority));
+    return res.status(200).json(formattedAuthorities);
   } catch (error) {
     return res.status(500).json({ error: 'Error obteniendo las autoridades', details: error.message });
   }
@@ -30,7 +33,8 @@ exports.getAuthorityById = async (req, res) => {
       return res.status(404).json({ error: 'Autoridad no encontrada' });
     }
 
-    return res.status(200).json(authority);
+    const formattedAuthority = formatDatesToColombiaTime(authority);
+    return res.status(200).json(formattedAuthority);
   } catch (error) {
     return res.status(500).json({ error: 'Error obteniendo la autoridad', details: error.message });
   }
@@ -50,7 +54,8 @@ exports.updateAuthority = async (req, res) => {
     authority.name = name || authority.name;
     await authority.save();
 
-    return res.status(200).json(authority);
+    const formattedAuthority = formatDatesToColombiaTime(authority);
+    return res.status(200).json(formattedAuthority);
   } catch (error) {
     return res.status(500).json({ error: 'Error actualizando la autoridad', details: error.message });
   }
