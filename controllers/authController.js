@@ -73,15 +73,16 @@ exports.register = async (req, res) => {
       password: hashedPassword
     });
 
-    const token = generateToken(newUser);
-
+    const token = generateToken(newUser, role);
     res.cookie('token', token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       maxAge: 24 * 60 * 60 * 1000
     });
 
-    return res.status(201).json({ user: { id: newUser.id, email: newUser.email, roleId: newUser.roleId } });
+    return res.status(201).json({
+      user: { id: newUser.id, email: newUser.email, role: role.name },
+    });
   } catch (error) {
     return res.status(500).json({ error: 'Error registrando el usuario', details: error.message });
   }
