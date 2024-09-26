@@ -3,8 +3,8 @@ const { User, Role } = require('../models');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
-const generateToken = (user) => {
-  const payload = { id: user.id, email: user.email, roleId: user.roleId };
+const generateToken = (user, role) => {
+  const payload = { id: user.id, email: user.email, role: role.name };
   return jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '24h' });
 };
 
@@ -20,7 +20,7 @@ exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    const user = await User.findOne({ where: { email } });
+    const user = await User.findOne({ where: { email }, include: Role });
     if (!user) {
       return res.status(401).json({ error: 'Credenciales inválidas' });
     }
@@ -30,15 +30,17 @@ exports.login = async (req, res) => {
       return res.status(401).json({ error: 'Credenciales inválidas' });
     }
 
-    const token = generateToken(user);
+    const token = generateToken(user, user.Role);
 
     res.cookie('token', token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
-      maxAge: 24 * 60 * 60 * 1000
+      maxAge: 24 * 60 * 60 * 1000,
     });
 
-    return res.status(200).json({ user: { id: user.id, email: user.email, roleId: user.roleId } });
+    return res.status(200).json({
+      user: { id: user.id, email: user.email, role: user.Role.name },
+    });
   } catch (error) {
     return res.status(500).json({ error: 'Error iniciando sesión', details: error.message });
   }
@@ -58,7 +60,7 @@ exports.register = async (req, res) => {
       return res.status(400).json({ error: 'El correo ya está registrado' });
     }
 
-    const role = await Role.findOne({ where: { name: 'USUARIO' } });
+    const role = await Role.findOne({ where: { name: 'User' } });
     if (!role) {
       return res.status(500).json({ error: 'No se encontró el rol USUARIO' });
     }
