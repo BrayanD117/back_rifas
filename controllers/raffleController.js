@@ -10,7 +10,7 @@ dayjs.extend(timezone);
 
 exports.createRaffle = async (req, res) => {
   try {
-    const { coverageId, authorityId, name, description, prize, baseValue, ivaValue, totalValue, lottery, numberDigits, numberSeries, bearerCheck, gameDate, closeDate, expirationDate, imageUrl, active, dateTimePublication } = req.body;
+    const { coverageId, authorityId, name, description, prize, baseValue, ivaValue, totalValue, lottery, numberDigits, numberSeries, bearerCheck, gameDate, closeDate, expirationDate, active, dateTimePublication, imagesUrls } = req.body;
     
     const newRaffle = await Raffle.create({
       coverageId,
@@ -28,9 +28,9 @@ exports.createRaffle = async (req, res) => {
       gameDate,
       closeDate,
       expirationDate,
-      imageUrl,
       active,
-      dateTimePublication
+      dateTimePublication,
+      imagesUrls
     });
 
     const formattedRaffle = formatRaffleDatesToColombiaTime(newRaffle);
@@ -102,7 +102,7 @@ exports.getRaffleById = async (req, res) => {
 exports.updateRaffle = async (req, res) => {
   try {
     const { id } = req.params;
-    const { coverageId, authorityId, name, description, prize, baseValue, ivaValue, totalValue, lottery, numberDigits, numberSeries, bearerCheck, gameDate, closeDate, expirationDate, imageUrl, active, dateTimePublication } = req.body;
+    const { coverageId, authorityId, name, description, prize, baseValue, ivaValue, totalValue, lottery, numberDigits, numberSeries, bearerCheck, gameDate, closeDate, expirationDate, active, dateTimePublication, imagesUrls } = req.body;
 
     const raffle = await Raffle.findByPk(id);
 
@@ -125,9 +125,9 @@ exports.updateRaffle = async (req, res) => {
     raffle.gameDate = gameDate || raffle.gameDate;
     raffle.closeDate = closeDate || raffle.closeDate;
     raffle.expirationDate = expirationDate || raffle.expirationDate;
-    raffle.imageUrl = imageUrl || raffle.imageUrl;
     raffle.active = active || raffle.active;
     raffle.dateTimePublication = dateTimePublication || raffle.dateTimePublication;
+    raffle.imagesUrls = imagesUrls || raffle.imagesUrls;
 
     await raffle.save();
 
