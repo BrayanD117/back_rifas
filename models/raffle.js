@@ -51,7 +51,7 @@ module.exports = (sequelize, DataTypes) => {
     expirationDate: DataTypes.DATE,
     active: DataTypes.BOOLEAN,
     dateTimePublication: DataTypes.DATE,
-    imageUrl: DataTypes.ARRAY(DataTypes.TEXT),
+    imagesUrls: DataTypes.ARRAY(DataTypes.TEXT),
   }, {
     sequelize,
     modelName: 'Raffle',
