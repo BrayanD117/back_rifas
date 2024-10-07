@@ -34,8 +34,10 @@ module.exports = (sequelize, DataTypes) => {
     coverageId: DataTypes.UUID,
     authorityId: DataTypes.UUID,
     name: DataTypes.STRING,
+    slogan: DataTypes.STRING,
     description: DataTypes.TEXT,
     prize: DataTypes.TEXT,
+    prizeSpecifications: DataTypes.TEXT,
     baseValue: DataTypes.DECIMAL(12,2),
     ivaValue: DataTypes.DECIMAL(12,2),
     totalValue: DataTypes.DECIMAL(12,2),
@@ -51,7 +53,11 @@ module.exports = (sequelize, DataTypes) => {
     expirationDate: DataTypes.DATE,
     active: DataTypes.BOOLEAN,
     dateTimePublication: DataTypes.DATE,
+    dateTimeSale: DataTypes.DATE,
     imagesUrls: DataTypes.ARRAY(DataTypes.TEXT),
+    managerName: DataTypes.STRING,
+    managerContact: DataTypes.STRING,
+    managerAddress: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'Raffle',
