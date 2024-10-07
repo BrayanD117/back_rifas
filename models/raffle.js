@@ -37,6 +37,7 @@ module.exports = (sequelize, DataTypes) => {
     slogan: DataTypes.STRING,
     description: DataTypes.TEXT,
     prize: DataTypes.TEXT,
+    prizeCommercialValuation: DataTypes.DECIMAL(12,2),
     prizeSpecifications: DataTypes.TEXT,
     baseValue: DataTypes.DECIMAL(12,2),
     ivaValue: DataTypes.DECIMAL(12,2),
