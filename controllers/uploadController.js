@@ -12,7 +12,9 @@ exports.handleFileUpload = (req, res) => {
     return res.status(400).json({ message: 'El nombre de la rifa y los archivos son requeridos' });
   }
 
-  const uploadDir = path.join(__dirname, '..', 'uploads', 'raffles', raffleName);
+  const sanitizedRaffleName = raffleName.replace(/\s+/g, '_');
+
+  const uploadDir = path.join(__dirname, '..', 'uploads', 'raffles', sanitizedRaffleName);
 
   if (fs.existsSync(uploadDir)) {
     fs.readdirSync(uploadDir).forEach((file) => {
@@ -26,7 +28,7 @@ exports.handleFileUpload = (req, res) => {
     console.log('Procesando archivo:', file.originalname);
     const filePath = path.join(
       uploadDir,
-      `${raffleName}-${index + 1}${path.extname(file.originalname)}`
+      `${sanitizedRaffleName}_${index + 1}${path.extname(file.originalname)}`
     );
 
     fs.writeFileSync(filePath, file.buffer);
