@@ -43,7 +43,7 @@ router.use('/prizes', prizeRoutes);
 router.use('/award-prizes', awardPrizeRoutes);
 router.use('/auth', authRoutes);
 router.use('/categories', categoryRoutes);
-router.use('/departaments', departmentRoutes);
+router.use('/departments', departmentRoutes);
 router.use('/cities', cityRoutes);
 router.use('/upload', uploadRoutes);
 
