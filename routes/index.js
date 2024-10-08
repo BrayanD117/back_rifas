@@ -20,6 +20,9 @@ const prizeRoutes = require('../routes/prizeRoutes');
 const awardPrizeRoutes = require('../routes/awardPrizeRoutes');
 const authRoutes = require('../routes/authRoutes');
 const categoryRoutes = require('../routes/categoryRoutes');
+const departmentRoutes = require('../routes/departmentRoutes');
+const cityRoutes = require('../routes/cityRoutes');
+const uploadRoutes = require('../routes/uploadRoutes');
 
 router.use('/roles', roleRoutes);
 router.use('/users', userRoutes);
@@ -40,5 +43,8 @@ router.use('/prizes', prizeRoutes);
 router.use('/award-prizes', awardPrizeRoutes);
 router.use('/auth', authRoutes);
 router.use('/categories', categoryRoutes);
+router.use('/departments', departmentRoutes);
+router.use('/cities', cityRoutes);
+router.use('/upload', uploadRoutes);
 
 module.exports = router;

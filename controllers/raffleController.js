@@ -4,6 +4,9 @@ const dayjs = require('dayjs');
 const timezone = require('dayjs/plugin/timezone');
 const utc = require('dayjs/plugin/utc');
 const { Op } = require('sequelize');
+const fs = require('fs');
+const path = require('path');
+const uploadController = require('./uploadController');
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -120,6 +123,13 @@ exports.updateRaffle = async (req, res) => {
       return res.status(404).json({ error: 'Rifa no encontrada' });
     }
 
+    const sanitizedRaffleName = name.replace(/\s+/g, '_');
+
+    if (req.files && req.files.length > 0) {
+      req.body.raffleName = sanitizedRaffleName;
+      uploadController.handleFileUpload(req, res);
+    }
+
     raffle.coverageId = coverageId || raffle.coverageId;
     raffle.authorityId = authorityId || raffle.authorityId;
     raffle.departmentId = departmentId || raffle.departmentId;
@@ -167,8 +177,16 @@ exports.deleteRaffle = async (req, res) => {
       return res.status(404).json({ error: 'Rifa no encontrada' });
     }
 
+    const sanitizedRaffleName = raffle.name.replace(/\s+/g, '_');
+    const uploadDir = path.join(__dirname, '..', 'uploads', 'raffles', sanitizedRaffleName);
+
+    if (fs.existsSync(uploadDir)) {
+      fs.rmSync(uploadDir, { recursive: true, force: true });
+      console.log(`Carpeta ${uploadDir} eliminada correctamente.`);
+    }
+
     await raffle.destroy();
-    return res.status(200).json({ message: 'Rifa eliminada correctamente' });
+    return res.status(200).json({ message: 'Rifa eliminada correctamente junto con su carpeta de imágenes' });
   } catch (error) {
     return res.status(500).json({ error: 'Error eliminando la rifa', details: error.message });
   }

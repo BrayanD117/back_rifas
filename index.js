@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const path = require('path');
 const cors = require('cors');
 const cookieParser = require('cookie-parser'); 
 const routes = require('./routes');
@@ -16,6 +17,7 @@ app.use(cors({
 
 // Routes
 app.use('/api', routes);
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Port
 const PORT = process.env.SERVER_PORT || 3000;
