@@ -10,14 +10,20 @@ dayjs.extend(timezone);
 
 exports.createRaffle = async (req, res) => {
   try {
-    const { coverageId, authorityId, name, description, prize, baseValue, ivaValue, totalValue, lottery, numberDigits, numberSeries, bearerCheck, gameDate, closeDate, expirationDate, active, dateTimePublication, imagesUrls } = req.body;
+    const { coverageId, authorityId, departmentId, cityId, categoryId, name, slogan, description, prize, prizeCommercialValuation, prizeSpecifications, baseValue, ivaValue, totalValue, lottery, numberDigits, numberSeries, bearerCheck, gameDate, closeDate, expirationDate, active, dateTimePublication, dateTimeSale, imagesUrls, managerName, managerContact, managerAddress } = req.body;
     
     const newRaffle = await Raffle.create({
       coverageId,
       authorityId,
+      departmentId,
+      cityId,
+      categoryId,
       name,
+      slogan,
       description,
       prize,
+      prizeCommercialValuation,
+      prizeSpecifications,
       baseValue,
       ivaValue,
       totalValue,
@@ -30,7 +36,11 @@ exports.createRaffle = async (req, res) => {
       expirationDate,
       active,
       dateTimePublication,
-      imagesUrls
+      dateTimeSale,
+      imagesUrls,
+      managerName,
+      managerContact,
+      managerAddress
     });
 
     const formattedRaffle = formatRaffleDatesToColombiaTime(newRaffle);
@@ -102,7 +112,7 @@ exports.getRaffleById = async (req, res) => {
 exports.updateRaffle = async (req, res) => {
   try {
     const { id } = req.params;
-    const { coverageId, authorityId, name, description, prize, baseValue, ivaValue, totalValue, lottery, numberDigits, numberSeries, bearerCheck, gameDate, closeDate, expirationDate, active, dateTimePublication, imagesUrls } = req.body;
+    const { coverageId, authorityId, departmentId, cityId, categoryId, name, slogan, description, prize, prizeCommercialValuation, prizeSpecifications, baseValue, ivaValue, totalValue, lottery, numberDigits, numberSeries, bearerCheck, gameDate, closeDate, expirationDate, active, dateTimePublication, dateTimeSale, imagesUrls, managerName, managerContact, managerAddress } = req.body;
 
     const raffle = await Raffle.findByPk(id);
 
@@ -112,9 +122,15 @@ exports.updateRaffle = async (req, res) => {
 
     raffle.coverageId = coverageId || raffle.coverageId;
     raffle.authorityId = authorityId || raffle.authorityId;
+    raffle.departmentId = departmentId || raffle.departmentId;
+    raffle.cityId = cityId || raffle.cityId;
+    raffle.categoryId = categoryId || raffle.categoryId;
     raffle.name = name || raffle.name;
+    raffle.slogan = slogan || raffle.slogan;
     raffle.description = description || raffle.description;
     raffle.prize = prize || raffle.prize;
+    raffle.prizeCommercialValuation = prizeCommercialValuation || raffle.prizeCommercialValuation;
+    raffle.prizeSpecifications = prizeSpecifications || raffle.prizeSpecifications;
     raffle.baseValue = baseValue || raffle.baseValue;
     raffle.ivaValue = ivaValue || raffle.ivaValue;
     raffle.totalValue = totalValue || raffle.totalValue;
@@ -127,7 +143,11 @@ exports.updateRaffle = async (req, res) => {
     raffle.expirationDate = expirationDate || raffle.expirationDate;
     raffle.active = active || raffle.active;
     raffle.dateTimePublication = dateTimePublication || raffle.dateTimePublication;
+    raffle.dateTimeSale = dateTimeSale || raffle.dateTimeSale;
     raffle.imagesUrls = imagesUrls || raffle.imagesUrls;
+    raffle.managerName = managerName || raffle.managerName;
+    raffle.managerContact = managerContact || raffle.managerContact;
+    raffle.managerAddress = managerAddress || raffle.managerAddress;
 
     await raffle.save();
 
