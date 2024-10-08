@@ -19,6 +19,9 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       Raffle.belongsTo(models.Coverage, { foreignKey: 'coverageId' });
       Raffle.belongsTo(models.Authority, { foreignKey: 'authorityId' });
+      Raffle.belongsTo(models.Category, { foreignKey: 'categoryId' });
+      Raffle.belongsTo(models.Department, { foreignKey: 'departmentId' });
+      Raffle.belongsTo(models.City, { foreignKey: 'cityId' });
       Raffle.hasMany(models.Telemetry, { foreignKey: 'raffleId' });
       Raffle.hasMany(models.Transaction, { foreignKey: 'raffleId' });
       Raffle.hasMany(models.Drawing, { foreignKey: 'raffleId' });
@@ -33,9 +36,15 @@ module.exports = (sequelize, DataTypes) => {
     },
     coverageId: DataTypes.UUID,
     authorityId: DataTypes.UUID,
+    departmentId: DataTypes.STRING,
+    cityId: DataTypes.STRING,
+    categoryId: DataTypes.UUID,
     name: DataTypes.STRING,
+    slogan: DataTypes.STRING,
     description: DataTypes.TEXT,
     prize: DataTypes.TEXT,
+    prizeCommercialValuation: DataTypes.DECIMAL(12,2),
+    prizeSpecifications: DataTypes.TEXT,
     baseValue: DataTypes.DECIMAL(12,2),
     ivaValue: DataTypes.DECIMAL(12,2),
     totalValue: DataTypes.DECIMAL(12,2),
@@ -51,7 +60,11 @@ module.exports = (sequelize, DataTypes) => {
     expirationDate: DataTypes.DATE,
     active: DataTypes.BOOLEAN,
     dateTimePublication: DataTypes.DATE,
+    dateTimeSale: DataTypes.DATE,
     imagesUrls: DataTypes.ARRAY(DataTypes.TEXT),
+    managerName: DataTypes.STRING,
+    managerContact: DataTypes.STRING,
+    managerAddress: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'Raffle',
