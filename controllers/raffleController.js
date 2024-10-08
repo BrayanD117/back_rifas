@@ -10,11 +10,14 @@ dayjs.extend(timezone);
 
 exports.createRaffle = async (req, res) => {
   try {
-    const { coverageId, authorityId, name, slogan, description, prize, prizeCommercialValuation, prizeSpecifications, baseValue, ivaValue, totalValue, lottery, numberDigits, numberSeries, bearerCheck, gameDate, closeDate, expirationDate, active, dateTimePublication, dateTimeSale, imagesUrls, managerName, managerContact, managerAddress } = req.body;
+    const { coverageId, authorityId, departmentId, cityId, categoryId, name, slogan, description, prize, prizeCommercialValuation, prizeSpecifications, baseValue, ivaValue, totalValue, lottery, numberDigits, numberSeries, bearerCheck, gameDate, closeDate, expirationDate, active, dateTimePublication, dateTimeSale, imagesUrls, managerName, managerContact, managerAddress } = req.body;
     
     const newRaffle = await Raffle.create({
       coverageId,
       authorityId,
+      departmentId,
+      cityId,
+      categoryId,
       name,
       slogan,
       description,
@@ -109,7 +112,7 @@ exports.getRaffleById = async (req, res) => {
 exports.updateRaffle = async (req, res) => {
   try {
     const { id } = req.params;
-    const { coverageId, authorityId, name, slogan, description, prize, prizeCommercialValuation, prizeSpecifications, baseValue, ivaValue, totalValue, lottery, numberDigits, numberSeries, bearerCheck, gameDate, closeDate, expirationDate, active, dateTimePublication, dateTimeSale, imagesUrls, managerName, managerContact, managerAddress } = req.body;
+    const { coverageId, authorityId, departmentId, cityId, categoryId, name, slogan, description, prize, prizeCommercialValuation, prizeSpecifications, baseValue, ivaValue, totalValue, lottery, numberDigits, numberSeries, bearerCheck, gameDate, closeDate, expirationDate, active, dateTimePublication, dateTimeSale, imagesUrls, managerName, managerContact, managerAddress } = req.body;
 
     const raffle = await Raffle.findByPk(id);
 
@@ -119,6 +122,9 @@ exports.updateRaffle = async (req, res) => {
 
     raffle.coverageId = coverageId || raffle.coverageId;
     raffle.authorityId = authorityId || raffle.authorityId;
+    raffle.departmentId = departmentId || raffle.departmentId;
+    raffle.cityId = cityId || raffle.cityId;
+    raffle.categoryId = categoryId || raffle.categoryId;
     raffle.name = name || raffle.name;
     raffle.slogan = slogan || raffle.slogan;
     raffle.description = description || raffle.description;

@@ -19,6 +19,9 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       Raffle.belongsTo(models.Coverage, { foreignKey: 'coverageId' });
       Raffle.belongsTo(models.Authority, { foreignKey: 'authorityId' });
+      Raffle.belongsTo(models.Category, { foreignKey: 'categoryId' });
+      Raffle.belongsTo(models.Department, { foreignKey: 'departmentId' });
+      Raffle.belongsTo(models.City, { foreignKey: 'cityId' });
       Raffle.hasMany(models.Telemetry, { foreignKey: 'raffleId' });
       Raffle.hasMany(models.Transaction, { foreignKey: 'raffleId' });
       Raffle.hasMany(models.Drawing, { foreignKey: 'raffleId' });
@@ -33,6 +36,9 @@ module.exports = (sequelize, DataTypes) => {
     },
     coverageId: DataTypes.UUID,
     authorityId: DataTypes.UUID,
+    departmentId: DataTypes.STRING,
+    cityId: DataTypes.STRING,
+    categoryId: DataTypes.UUID,
     name: DataTypes.STRING,
     slogan: DataTypes.STRING,
     description: DataTypes.TEXT,
