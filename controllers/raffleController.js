@@ -13,8 +13,44 @@ dayjs.extend(timezone);
 
 exports.createRaffle = async (req, res) => {
   try {
-    const { coverageId, authorityId, departmentId, cityId, categoryId, name, slogan, description, prize, prizeCommercialValuation, prizeSpecifications, baseValue, ivaValue, totalValue, lottery, numberDigits, numberSeries, bearerCheck, gameDate, closeDate, expirationDate, active, dateTimePublication, dateTimeSale, imagesUrls, managerName, managerContact, managerAddress } = req.body;
-    
+    const {
+      coverageId,
+      authorityId,
+      departmentId,
+      cityId,
+      categoryId,
+      name,
+      slogan,
+      description,
+      prize,
+      prizeCommercialValuation,
+      prizeSpecifications,
+      baseValue,
+      ivaValue,
+      totalValue,
+      lottery,
+      numberDigits,
+      numberSeries,
+      bearerCheck,
+      gameDate,
+      closeDate,
+      expirationDate,
+      active,
+      dateTimePublication,
+      dateTimeSale,
+      imagesUrls,
+      managerName,
+      managerContact,
+      managerAddress,
+    } = req.body;
+
+    const sanitizedRaffleName = name.replace(/\s+/g, '_');
+
+    if (req.files && req.files.length > 0) {
+      req.body.raffleName = sanitizedRaffleName;
+      await uploadController.handleFileUpload(req, res);
+    }
+
     const newRaffle = await Raffle.create({
       coverageId,
       authorityId,
@@ -43,7 +79,7 @@ exports.createRaffle = async (req, res) => {
       imagesUrls,
       managerName,
       managerContact,
-      managerAddress
+      managerAddress,
     });
 
     const formattedRaffle = formatRaffleDatesToColombiaTime(newRaffle);
