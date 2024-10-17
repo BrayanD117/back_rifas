@@ -12,6 +12,7 @@ exports.verifyToken = (req, res, next) => {
     req.user = decoded;
     next();
   } catch (error) {
+    console.error("Error verificando token:", error);
     return res.status(401).json({ error: 'Token inválido' });
   }
 };
