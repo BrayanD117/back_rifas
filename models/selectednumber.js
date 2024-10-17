@@ -28,5 +28,36 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'SelectedNumber',
   });
+
+  SelectedNumber.afterCreate(async (selectedNumber, options) => {
+    await updateSalesPercentage(selectedNumber.transactionId.raffleId);
+  });
+
+  SelectedNumber.afterDestroy(async (selectedNumber, options) => {
+    await updateSalesPercentage(selectedNumber.transactionId.raffleId);
+  });
+
   return SelectedNumber;
 };
+
+async function updateSalesPercentage(raffleId) {
+  const { Raffle, SelectedNumber } = require('../models');
+
+  const raffle = await Raffle.findByPk(raffleId);
+  if (!raffle) return;
+
+  const totalNumbers = Math.pow(10, raffle.numberDigits) * raffle.numberSeries;
+
+  const selectedNumbersCount = await SelectedNumber.count({
+    where: {
+      raffleId: raffleId
+    }
+  });
+
+  const salesPercentage = (selectedNumbersCount * 100) / totalNumbers;
+
+  await Raffle.update(
+    { salesPercentage: salesPercentage || 0 },
+    { where: { id: raffleId } }
+  );
+}

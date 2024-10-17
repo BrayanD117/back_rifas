@@ -36,6 +36,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     coverageId: DataTypes.UUID,
     authorityId: DataTypes.UUID,
+    authorizationResolution: DataTypes.STRING,
     departmentId: DataTypes.STRING,
     cityId: DataTypes.STRING,
     categoryId: DataTypes.UUID,
@@ -64,10 +65,53 @@ module.exports = (sequelize, DataTypes) => {
     imagesUrls: DataTypes.ARRAY(DataTypes.TEXT),
     managerName: DataTypes.STRING,
     managerContact: DataTypes.STRING,
-    managerAddress: DataTypes.STRING
+    managerAddress: DataTypes.STRING,
+    salesPercentage: {
+      type: DataTypes.DECIMAL(5, 2),
+      defaultValue: 0
+    }
   }, {
     sequelize,
     modelName: 'Raffle',
   });
+
+  Raffle.afterCreate(async (raffle, options) => {
+    await updateSalesPercentage(raffle.id);
+  });
+
+  Raffle.afterUpdate(async (raffle, options) => {
+    await updateSalesPercentage(raffle.id);
+  });
+
   return Raffle;
 };
+
+function calculateVariations(numberDigits, numberSeries) {
+  const variations = Math.pow(10, numberDigits);
+  return variations * numberSeries;
+}
+
+async function updateSalesPercentage(raffleId) {
+  const Raffle = require('./raffle');
+  const SelectedNumber = require('./selectednumber');
+
+  const raffle = await Raffle.findByPk(raffleId);
+  if (!metaVenta) return;
+
+  const totalNumbers = calculateVariations(raffle.numberDigits, raffle.numberSeries);
+
+  const selectedNumbers = await SelectedNumber.findAll({
+    where: {
+      raffleId: raffleId
+    }
+  });
+  if (!selectedNumbers) return;
+
+  const salesPercentage = (selectedNumbers * 100) / totalNumbers;
+
+  await Raffle.update(
+    { salesPercentage: salesPercentage || 0 },
+    { where: { id: raffleId } }
+  );
+}
+

@@ -16,6 +16,7 @@ exports.createRaffle = async (req, res) => {
     const {
       coverageId,
       authorityId,
+      authorizationResolution,
       departmentId,
       cityId,
       categoryId,
@@ -54,6 +55,7 @@ exports.createRaffle = async (req, res) => {
     const newRaffle = await Raffle.create({
       coverageId,
       authorityId,
+      authorizationResolution,
       departmentId,
       cityId,
       categoryId,
@@ -151,7 +153,7 @@ exports.getRaffleById = async (req, res) => {
 exports.updateRaffle = async (req, res) => {
   try {
     const { id } = req.params;
-    const { coverageId, authorityId, departmentId, cityId, categoryId, name, slogan, description, prize, prizeCommercialValuation, prizeSpecifications, baseValue, ivaValue, totalValue, lottery, numberDigits, numberSeries, bearerCheck, gameDate, closeDate, expirationDate, active, dateTimePublication, dateTimeSale, imagesUrls, managerName, managerContact, managerAddress } = req.body;
+    const { coverageId, authorityId, authorizationResolution, departmentId, cityId, categoryId, name, slogan, description, prize, prizeCommercialValuation, prizeSpecifications, baseValue, ivaValue, totalValue, lottery, numberDigits, numberSeries, bearerCheck, gameDate, closeDate, expirationDate, active, dateTimePublication, dateTimeSale, imagesUrls, managerName, managerContact, managerAddress } = req.body;
 
     const raffle = await Raffle.findByPk(id);
 
@@ -168,6 +170,7 @@ exports.updateRaffle = async (req, res) => {
 
     raffle.coverageId = coverageId || raffle.coverageId;
     raffle.authorityId = authorityId || raffle.authorityId;
+    raffle.authorizationResolution = authorizationResolution || raffle.authorizationResolution;
     raffle.departmentId = departmentId || raffle.departmentId;
     raffle.cityId = cityId || raffle.cityId;
     raffle.categoryId = categoryId || raffle.categoryId;
