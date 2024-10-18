@@ -75,14 +75,6 @@ module.exports = (sequelize, DataTypes) => {
     modelName: 'Raffle',
   });
 
-  Raffle.afterCreate(async (raffle, options) => {
-    await updateSalesPercentage(raffle.id);
-  });
-
-  Raffle.afterUpdate(async (raffle, options) => {
-    await updateSalesPercentage(raffle.id);
-  });
-
   return Raffle;
 };
 

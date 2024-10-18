@@ -43,6 +43,7 @@ exports.createRaffle = async (req, res) => {
       managerName,
       managerContact,
       managerAddress,
+      salesPercentage
     } = req.body;
 
     const sanitizedRaffleName = name.replace(/\s+/g, '_');
@@ -82,6 +83,7 @@ exports.createRaffle = async (req, res) => {
       managerName,
       managerContact,
       managerAddress,
+      salesPercentage
     });
 
     const formattedRaffle = formatRaffleDatesToColombiaTime(newRaffle);
