@@ -23,8 +23,9 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true
     },
     drawingId: DataTypes.UUID,
-    name: DataTypes.STRING,
-    description: DataTypes.STRING
+    name: DataTypes.TEXT,
+    commercialValuation: DataTypes.DECIMAL(12,2),
+    specifications: DataTypes.TEXT
   }, {
     sequelize,
     modelName: 'Prize',
