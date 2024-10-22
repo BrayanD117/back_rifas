@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node --watch index.js"
+    "start": "node --watch index.js",
+    "start:prod": "cross-env NODE_ENV=production node index.js"
   },
   "author": "Brayan Patiño, Juan Caicedo, Sebastian Ramirez, Camilo Campos",
   "license": "ISC",
@@ -23,6 +24,7 @@
     "sequelize": "^6.37.3"
   },
   "devDependencies": {
+    "cross-env": "^7.0.3",
     "sequelize-cli": "^6.6.2"
   }
 }
