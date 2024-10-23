@@ -21,9 +21,18 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       primaryKey: true
     },
-    transactionId: DataTypes.UUID,
-    number: DataTypes.INTEGER,
-    numberStatusId: DataTypes.UUID
+    transactionId: {
+      type: DataTypes.UUID,
+      allowNull: false
+    },
+    number: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    numberStatusId: {
+      type: DataTypes.UUID,
+      allowNull: false
+    }
   }, {
     sequelize,
     modelName: 'SelectedNumber',
