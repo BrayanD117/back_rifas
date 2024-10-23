@@ -74,33 +74,3 @@ module.exports = (sequelize, DataTypes) => {
 
   return Raffle;
 };
-
-function calculateVariations(numberDigits, numberSeries) {
-  const variations = Math.pow(10, numberDigits);
-  return variations * numberSeries;
-}
-
-async function updateSalesPercentage(raffleId) {
-  const Raffle = require('./raffle');
-  const SelectedNumber = require('./selectednumber');
-
-  const raffle = await Raffle.findByPk(raffleId);
-  if (!metaVenta) return;
-
-  const totalNumbers = calculateVariations(raffle.numberDigits, raffle.numberSeries);
-
-  const selectedNumbers = await SelectedNumber.findAll({
-    where: {
-      raffleId: raffleId
-    }
-  });
-  if (!selectedNumbers) return;
-
-  const salesPercentage = (selectedNumbers * 100) / totalNumbers;
-
-  await Raffle.update(
-    { salesPercentage: salesPercentage || 0 },
-    { where: { id: raffleId } }
-  );
-}
-

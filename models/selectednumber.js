@@ -30,18 +30,24 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   SelectedNumber.afterCreate(async (selectedNumber, options) => {
-    await updateSalesPercentage(selectedNumber.transactionId.raffleId);
+    const transaction = await selectedNumber.getTransaction();
+    if (transaction && transaction.raffleId) {
+      await updateSalesPercentage(transaction.raffleId);
+    }
   });
 
   SelectedNumber.afterDestroy(async (selectedNumber, options) => {
-    await updateSalesPercentage(selectedNumber.transactionId.raffleId);
+    const transaction = await selectedNumber.getTransaction();
+    if (transaction && transaction.raffleId) {
+      await updateSalesPercentage(transaction.raffleId);
+    }
   });
 
   return SelectedNumber;
 };
 
 async function updateSalesPercentage(raffleId) {
-  const { Raffle, SelectedNumber } = require('../models');
+  const { Raffle, SelectedNumber, Transaction } = require('../models');
 
   const raffle = await Raffle.findByPk(raffleId);
   if (!raffle) return;
@@ -49,10 +55,15 @@ async function updateSalesPercentage(raffleId) {
   const totalNumbers = Math.pow(10, raffle.numberDigits) * raffle.numberSeries;
 
   const selectedNumbersCount = await SelectedNumber.count({
-    where: {
-      raffleId: raffleId
-    }
+    include: [
+      {
+        model: Transaction,
+        where: { raffleId: raffleId }
+      }
+    ]
   });
+
+  console.log(selectedNumbersCount);
 
   const salesPercentage = (selectedNumbersCount * 100) / totalNumbers;
 
