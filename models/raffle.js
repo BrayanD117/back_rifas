@@ -46,7 +46,6 @@ module.exports = (sequelize, DataTypes) => {
     baseValue: DataTypes.DECIMAL(12,2),
     ivaValue: DataTypes.DECIMAL(12,2),
     totalValue: DataTypes.DECIMAL(12,2),
-    lottery: DataTypes.STRING,
     numberDigits: DataTypes.INTEGER,
     numberSeries: DataTypes.INTEGER,
     bearerCheck: {

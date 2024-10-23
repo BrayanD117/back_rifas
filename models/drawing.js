@@ -26,7 +26,8 @@ module.exports = (sequelize, DataTypes) => {
     raffleId: DataTypes.UUID,
     drawTypeId: DataTypes.UUID,
     drawDate: DataTypes.DATE,
-    description: DataTypes.STRING
+    description: DataTypes.STRING,
+    lottery: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'Drawing',
