@@ -3,13 +3,14 @@ const { formatDatesToColombiaTime } = require('../utils/dateService');
 
 exports.createDrawing = async (req, res) => {
   try {
-    const { raffleId, drawTypeId, drawDate, description } = req.body;
+    const { raffleId, drawTypeId, drawDate, description, lottery } = req.body;
 
     const newDrawing = await Drawing.create({
       raffleId,
       drawTypeId,
       drawDate,
-      description
+      description,
+      lottery
     });
 
     const formattedDrawing = formatDatesToColombiaTime(newDrawing);
@@ -59,7 +60,7 @@ exports.getDrawingById = async (req, res) => {
 exports.updateDrawing = async (req, res) => {
   try {
     const { id } = req.params;
-    const { raffleId, drawTypeId, drawDate, description } = req.body;
+    const { raffleId, drawTypeId, drawDate, description, lottery } = req.body;
 
     const drawing = await Drawing.findByPk(id);
 
@@ -71,6 +72,7 @@ exports.updateDrawing = async (req, res) => {
     drawing.drawTypeId = drawTypeId || drawing.drawTypeId;
     drawing.drawDate = drawDate || drawing.drawDate;
     drawing.description = description || drawing.description;
+    drawing.lottery = lottery || drawing.lottery;
 
     await drawing.save();
 
