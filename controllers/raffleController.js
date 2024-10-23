@@ -23,13 +23,9 @@ exports.createRaffle = async (req, res) => {
       name,
       slogan,
       description,
-      prize,
-      prizeCommercialValuation,
-      prizeSpecifications,
       baseValue,
       ivaValue,
       totalValue,
-      lottery,
       numberDigits,
       numberSeries,
       bearerCheck,
@@ -63,13 +59,9 @@ exports.createRaffle = async (req, res) => {
       name,
       slogan,
       description,
-      prize,
-      prizeCommercialValuation,
-      prizeSpecifications,
       baseValue,
       ivaValue,
       totalValue,
-      lottery,
       numberDigits,
       numberSeries,
       bearerCheck,
@@ -155,7 +147,7 @@ exports.getRaffleById = async (req, res) => {
 exports.updateRaffle = async (req, res) => {
   try {
     const { id } = req.params;
-    const { coverageId, authorityId, authorizationResolution, departmentId, cityId, categoryId, name, slogan, description, prize, prizeCommercialValuation, prizeSpecifications, baseValue, ivaValue, totalValue, lottery, numberDigits, numberSeries, bearerCheck, gameDate, closeDate, expirationDate, active, dateTimePublication, dateTimeSale, imagesUrls, managerName, managerContact, managerAddress } = req.body;
+    const { coverageId, authorityId, authorizationResolution, departmentId, cityId, categoryId, name, slogan, description, baseValue, ivaValue, totalValue, numberDigits, numberSeries, bearerCheck, gameDate, closeDate, expirationDate, active, dateTimePublication, dateTimeSale, imagesUrls, managerName, managerContact, managerAddress } = req.body;
 
     const raffle = await Raffle.findByPk(id);
 
@@ -179,13 +171,9 @@ exports.updateRaffle = async (req, res) => {
     raffle.name = name || raffle.name;
     raffle.slogan = slogan || raffle.slogan;
     raffle.description = description || raffle.description;
-    raffle.prize = prize || raffle.prize;
-    raffle.prizeCommercialValuation = prizeCommercialValuation || raffle.prizeCommercialValuation;
-    raffle.prizeSpecifications = prizeSpecifications || raffle.prizeSpecifications;
     raffle.baseValue = baseValue || raffle.baseValue;
     raffle.ivaValue = ivaValue || raffle.ivaValue;
     raffle.totalValue = totalValue || raffle.totalValue;
-    raffle.lottery = lottery || raffle.lottery;
     raffle.numberDigits = numberDigits || raffle.numberDigits;
     raffle.numberSeries = numberSeries || raffle.numberSeries;
     raffle.bearerCheck = bearerCheck || raffle.bearerCheck;

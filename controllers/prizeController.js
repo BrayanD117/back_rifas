@@ -3,12 +3,13 @@ const { formatDatesToColombiaTime } = require('../utils/dateService');
 
 exports.createPrize = async (req, res) => {
   try {
-    const { drawingId, name, description } = req.body;
+    const { drawingId, name, specifications, commercialValuation } = req.body;
 
     const newPrize = await Prize.create({
       drawingId,
       name,
-      description
+      specifications,
+      commercialValuation
     });
 
     const formattedPrize = formatDatesToColombiaTime(newPrize);
@@ -56,7 +57,7 @@ exports.getPrizeById = async (req, res) => {
 exports.updatePrize = async (req, res) => {
   try {
     const { id } = req.params;
-    const { drawingId, name, description } = req.body;
+    const { drawingId, name, specifications, commercialValuation } = req.body;
 
     const prize = await Prize.findByPk(id);
 
@@ -66,7 +67,8 @@ exports.updatePrize = async (req, res) => {
 
     prize.drawingId = drawingId || prize.drawingId;
     prize.name = name || prize.name;
-    prize.description = description || prize.description;
+    prize.specifications = specifications || prize.specifications;
+    prize.commercialValuation = commercialValuation || prize.commercialValuation;
 
     await prize.save();
 
