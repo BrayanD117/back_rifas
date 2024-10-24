@@ -34,36 +34,103 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       primaryKey: true
     },
-    coverageId: DataTypes.UUID,
-    authorityId: DataTypes.UUID,
-    authorizationResolution: DataTypes.STRING,
+    coverageId: {
+      type: DataTypes.UUID,
+      allowNull: false
+    },
+    authorityId: {
+      type: DataTypes.UUID,
+      allowNull: false
+    },
+    authorizationResolution: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
     departmentId: DataTypes.STRING,
     cityId: DataTypes.STRING,
-    categoryId: DataTypes.UUID,
-    name: DataTypes.STRING,
-    slogan: DataTypes.STRING,
-    description: DataTypes.TEXT,
-    baseValue: DataTypes.DECIMAL(12,2),
-    ivaValue: DataTypes.DECIMAL(12,2),
-    totalValue: DataTypes.DECIMAL(12,2),
-    numberDigits: DataTypes.INTEGER,
-    numberSeries: DataTypes.INTEGER,
+    categoryId: {
+      type: DataTypes.UUID,
+      allowNull: false
+    },
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    slogan: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    description: {
+      type: DataTypes.TEXT,
+      allowNull: false
+    },
+    baseValue: {
+      type: DataTypes.DECIMAL(12,2),
+      allowNull: false
+    },
+    ivaValue: {
+      type: DataTypes.DECIMAL(12,2),
+      allowNull: false
+    },
+    totalValue: {
+      type: DataTypes.DECIMAL(12,2),
+      allowNull: false
+    },
+    numberDigits: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    numberSeries: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
     bearerCheck: {
       type: DataTypes.BOOLEAN,
       defaultValue: false
     },
-    gameDate: DataTypes.DATE,
-    closeDate: DataTypes.DATE,
-    expirationDate: DataTypes.DATE,
-    active: DataTypes.BOOLEAN,
-    dateTimePublication: DataTypes.DATE,
-    dateTimeSale: DataTypes.DATE,
-    imagesUrls: DataTypes.ARRAY(DataTypes.TEXT),
-    managerName: DataTypes.STRING,
-    managerContact: DataTypes.STRING,
-    managerAddress: DataTypes.STRING,
+    gameDate: {
+      type: DataTypes.DATE,
+      allowNull: false
+    },
+    closeDate: {
+      type: DataTypes.DATE,
+      allowNull: false
+    },
+    expirationDate: {
+      type: DataTypes.DATE,
+      allowNull: false
+    },
+    active: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false
+    },
+    dateTimePublication: {
+      type: DataTypes.DATE,
+      allowNull: false
+    },
+    dateTimeSale: {
+      type: DataTypes.DATE,
+      allowNull: false
+    },
+    imagesUrls: {
+      type: DataTypes.ARRAY(DataTypes.TEXT),
+      allowNull: false
+    },
+    managerName: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    managerContact: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    managerAddress: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
     salesPercentage: {
       type: DataTypes.DECIMAL(5, 2),
+      allowNull: false,
       defaultValue: 0
     }
   }, {

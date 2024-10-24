@@ -27,11 +27,26 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.UUID,
       allowNull: true
     },
-    name: DataTypes.STRING,
-    documentNumber: DataTypes.STRING,
-    birthday: DataTypes.DATEONLY,
-    phoneNumber: DataTypes.STRING(10),
-    email: DataTypes.STRING,
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    documentNumber: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    birthday: {
+      type: DataTypes.DATEONLY,
+      allowNull: false
+    },
+    phoneNumber: {
+      type: DataTypes.STRING(10),
+      allowNull: false
+    }, 
+    email: {
+      type:  DataTypes.STRING,
+      allowNull: false
+    }
   }, {
     sequelize,
     modelName: 'Customer',
