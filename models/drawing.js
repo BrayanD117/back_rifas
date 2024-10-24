@@ -35,6 +35,14 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.DATE,
       allowNull: false
     },
+    closeDate: {
+      type: DataTypes.DATE,
+      allowNull: false
+    },
+    expirationDate: {
+      type: DataTypes.DATE,
+      allowNull: false
+    },
     description: DataTypes.STRING,
     lottery: {
      type: DataTypes.STRING,

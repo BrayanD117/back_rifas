@@ -88,18 +88,6 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.BOOLEAN,
       defaultValue: false
     },
-    gameDate: {
-      type: DataTypes.DATE,
-      allowNull: false
-    },
-    closeDate: {
-      type: DataTypes.DATE,
-      allowNull: false
-    },
-    expirationDate: {
-      type: DataTypes.DATE,
-      allowNull: false
-    },
     active: {
       type: DataTypes.BOOLEAN,
       allowNull: false

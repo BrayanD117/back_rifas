@@ -29,9 +29,6 @@ exports.createRaffle = async (req, res) => {
       numberDigits,
       numberSeries,
       bearerCheck,
-      gameDate,
-      closeDate,
-      expirationDate,
       active,
       dateTimePublication,
       dateTimeSale,
@@ -65,9 +62,6 @@ exports.createRaffle = async (req, res) => {
       numberDigits,
       numberSeries,
       bearerCheck,
-      gameDate,
-      closeDate,
-      expirationDate,
       active,
       dateTimePublication,
       dateTimeSale,
@@ -147,7 +141,7 @@ exports.getRaffleById = async (req, res) => {
 exports.updateRaffle = async (req, res) => {
   try {
     const { id } = req.params;
-    const { coverageId, authorityId, authorizationResolution, departmentId, cityId, categoryId, name, slogan, description, baseValue, ivaValue, totalValue, numberDigits, numberSeries, bearerCheck, gameDate, closeDate, expirationDate, active, dateTimePublication, dateTimeSale, imagesUrls, managerName, managerContact, managerAddress } = req.body;
+    const { coverageId, authorityId, authorizationResolution, departmentId, cityId, categoryId, name, slogan, description, baseValue, ivaValue, totalValue, numberDigits, numberSeries, bearerCheck, active, dateTimePublication, dateTimeSale, imagesUrls, managerName, managerContact, managerAddress } = req.body;
 
     const raffle = await Raffle.findByPk(id);
 
@@ -177,9 +171,6 @@ exports.updateRaffle = async (req, res) => {
     raffle.numberDigits = numberDigits || raffle.numberDigits;
     raffle.numberSeries = numberSeries || raffle.numberSeries;
     raffle.bearerCheck = bearerCheck || raffle.bearerCheck;
-    raffle.gameDate = gameDate || raffle.gameDate;
-    raffle.closeDate = closeDate || raffle.closeDate;
-    raffle.expirationDate = expirationDate || raffle.expirationDate;
     raffle.active = active || raffle.active;
     raffle.dateTimePublication = dateTimePublication || raffle.dateTimePublication;
     raffle.dateTimeSale = dateTimeSale || raffle.dateTimeSale;
