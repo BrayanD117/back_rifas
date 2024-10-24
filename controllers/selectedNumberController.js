@@ -1,4 +1,4 @@
-const { SelectedNumber, Transaction, NumberStatus } = require('../models');
+const { SelectedNumber, Transaction, NumberStatus, sequelize } = require('../models');
 const { formatDatesToColombiaTime } = require('../utils/dateService');
 
 exports.createSelectedNumber = async (req, res) => {
@@ -91,5 +91,69 @@ exports.deleteSelectedNumber = async (req, res) => {
     return res.status(200).json({ message: 'Número seleccionado eliminado correctamente' });
   } catch (error) {
     return res.status(500).json({ error: 'Error eliminando el número seleccionado', details: error.message });
+  }
+};
+
+exports.validateAndLockNumber = async (req, res) => {
+  const transaction = await sequelize.transaction();
+  try {
+    const { raffleId } = req.params;
+    const { number } = req.query;
+
+    if (!number) {
+      return res.status(400).json({ error: "El número es requerido." });
+    }
+
+    const selectedNumber = await SelectedNumber.findOne({
+      where: { number },
+      lock: transaction.LOCK.UPDATE,
+      transaction
+    });
+
+    if (!selectedNumber) {
+      await transaction.commit();
+      return res.status(200).json({
+        isAvailable: true,
+        message: 'El número está disponible.'
+      });
+    }
+
+    const transactionRecord = await Transaction.findOne({
+      where: { id: selectedNumber.transactionId, raffleId },
+      transaction
+    });
+
+    if (!transactionRecord) {
+      await transaction.commit();
+      return res.status(200).json({
+        isAvailable: true,
+        message: 'El número está disponible.'
+      });
+    }
+
+    const numberStatus = await NumberStatus.findByPk(selectedNumber.numberStatusId, {
+      attributes: ['id', 'name'],
+      transaction 
+    });
+
+    if (numberStatus && numberStatus.name !== 'Disponible') {
+      await transaction.rollback();
+      return res.status(200).json({
+        isAvailable: false,
+        message: 'El número ya está reservado o no disponible.'
+      });
+    }
+
+    await transaction.commit();
+    return res.status(200).json({
+      isAvailable: true,
+      message: 'El número está disponible.'
+    });
+  } catch (error) {
+    await transaction.rollback();
+    return res.status(500).json({
+      error: 'Error al validar el número.',
+      details: error.message
+    });
   }
 };

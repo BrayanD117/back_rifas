@@ -12,4 +12,6 @@ router.put('/:id', SelectedNumberController.updateSelectedNumber);
 
 router.delete('/:id', SelectedNumberController.deleteSelectedNumber);
 
+router.get('/:raffleId/validate-number', SelectedNumberController.validateAndLockNumber);
+
 module.exports = router;
