@@ -195,12 +195,87 @@ module.exports = {
       allowNull: false
     });
 
-    await queryInterface.changeColumn('Raffles', 'dateTimePublication', {
+    await queryInterface.changeColumn('Roles', 'name', {
+      type: Sequelize.STRING,
+      allowNull: false
+    });
+
+    await queryInterface.changeColumn('Sales', 'transactionId', {
+      type: Sequelize.UUID,
+      allowNull: false
+    });
+
+    await queryInterface.changeColumn('Sales', 'invoiceNumber', {
+      type: Sequelize.STRING,
+      allowNull: false
+    });
+
+    await queryInterface.changeColumn('Sales', 'baseValue', {
+      type: Sequelize.DECIMAL(12, 2),
+      allowNull: false
+    });
+
+    await queryInterface.changeColumn('Sales', 'ivaValue', {
+      type: Sequelize.DECIMAL(12, 2),
+      allowNull: false
+    });
+
+    await queryInterface.changeColumn('Sales', 'totalValue', {
+      type: Sequelize.DECIMAL(12, 2),
+      allowNull: false
+    });
+
+    await queryInterface.changeColumn('TransactionStatuses', 'name', {
+      type: Sequelize.STRING,
+      allowNull: false
+    });
+
+    await queryInterface.changeColumn('Transactions', 'customerId', {
+      type: Sequelize.UUID,
+      allowNull: false
+    });
+
+    await queryInterface.changeColumn('Transactions', 'raffleId', {
+      type: Sequelize.UUID,
+      allowNull: false
+    });
+
+    await queryInterface.changeColumn('Transactions', 'orderNumber', {
+      type: Sequelize.STRING,
+      allowNull: false
+    });
+
+    await queryInterface.changeColumn('Transactions', 'transactionStatusId', {
+      type: Sequelize.UUID,
+      allowNull: false
+    });
+
+    await queryInterface.changeColumn('Transactions', 'purchasePlace', {
+      type: Sequelize.TEXT,
+      allowNull: false
+    });
+
+    await queryInterface.changeColumn('Transactions', 'reservationDate', {
       type: Sequelize.DATE,
       allowNull: false
     });
 
-    await queryInterface.changeColumn('Roles', 'name', {
+    await queryInterface.changeColumn('Transactions', 'purchaseDate', {
+      type: Sequelize.DATE,
+      allowNull: false
+    });
+
+    await queryInterface.changeColumn('Users', 'roleId', {
+      type: Sequelize.UUID,
+      allowNull: false
+    });
+
+    await queryInterface.changeColumn('Users', 'email', {
+      type: Sequelize.STRING,
+      allowNull: false
+    });
+
+    await queryInterface.changeColumn('Users', 'password', {
       type: Sequelize.STRING,
       allowNull: false
     });
