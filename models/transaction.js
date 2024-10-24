@@ -26,13 +26,34 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       primaryKey: true
     },
-    customerId: DataTypes.UUID,
-    raffleId: DataTypes.UUID,
-    orderNumber: DataTypes.INTEGER,
-    transactionStatusId: DataTypes.UUID,
-    purchasePlace: DataTypes.TEXT,
-    reservationDate: DataTypes.DATE,
-    purchaseDate: DataTypes.DATE
+    customerId: {
+      type: DataTypes.UUID,
+      allowNull: false
+    },
+    raffleId: {
+      type: DataTypes.UUID,
+      allowNull: false
+    },
+    orderNumber: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    transactionStatusId: {
+      type: DataTypes.UUID,
+      allowNull: false
+    },
+    purchasePlace: {
+      type: DataTypes.TEXT,
+      allowNull: false
+    },
+    reservationDate: {
+      type: DataTypes.DATE,
+      allowNull: false
+    },
+    purchaseDate: {
+      type: DataTypes.DATE,
+      allowNull: false
+    }
   }, {
     sequelize,
     modelName: 'Transaction',

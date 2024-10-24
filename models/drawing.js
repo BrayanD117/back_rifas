@@ -23,11 +23,23 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       primaryKey: true
     },
-    raffleId: DataTypes.UUID,
-    drawTypeId: DataTypes.UUID,
-    drawDate: DataTypes.DATE,
+    raffleId: {
+      type: DataTypes.UUID,
+      allowNull: false
+    },
+    drawTypeId: {
+      type: DataTypes.UUID,
+      allowNull: false
+    },
+    drawDate: {
+      type: DataTypes.DATE,
+      allowNull: false
+    },
     description: DataTypes.STRING,
-    lottery: DataTypes.STRING
+    lottery: {
+     type: DataTypes.STRING,
+     allowNull: false
+    }
   }, {
     sequelize,
     modelName: 'Drawing',

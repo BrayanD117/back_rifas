@@ -21,9 +21,18 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       primaryKey: true
     },
-    customerId: DataTypes.UUID,
-    prizeId: DataTypes.UUID,
-    deliveryDate: DataTypes.DATEONLY
+    customerId: {
+      type: DataTypes.UUID,
+      allowNull: false
+    }, 
+    prizeId: {
+      type: DataTypes.UUID,
+      allowNull: false
+    }, 
+    deliveryDate: {
+      type: DataTypes.DATEONLY,
+      allowNull: false
+    } 
   }, {
     sequelize,
     modelName: 'AwardPrize',

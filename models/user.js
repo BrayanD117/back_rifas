@@ -22,7 +22,10 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       primaryKey: true
     },
-    roleId: DataTypes.UUID,
+    roleId: {
+      type: DataTypes.UUID,
+      allowNull: false
+    },
     email: {
       type: DataTypes.STRING,
       allowNull: false

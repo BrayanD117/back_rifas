@@ -20,11 +20,26 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       primaryKey: true
     },
-    transactionId: DataTypes.UUID,
-    invoiceNumber: DataTypes.STRING,
-    baseValue: DataTypes.DECIMAL,
-    ivaValue: DataTypes.DECIMAL,
-    totalValue: DataTypes.DECIMAL
+    transactionId: {
+      type: DataTypes.UUID,
+      allowNull: false
+    },
+    invoiceNumber: {
+      type: DataTypes.STRING,
+      allowNull: false
+    }, 
+    baseValue: {
+      type: DataTypes.DECIMAL,
+      allowNull: false
+    },
+    ivaValue: {
+      type: DataTypes.DECIMAL,
+      allowNull: false
+    },
+    totalValue: {
+      type: DataTypes.DECIMAL,
+      allowNull: false
+    }
   }, {
     sequelize,
     modelName: 'Sale',

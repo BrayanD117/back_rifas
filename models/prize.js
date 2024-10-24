@@ -22,10 +22,22 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       primaryKey: true
     },
-    drawingId: DataTypes.UUID,
-    name: DataTypes.TEXT,
-    commercialValuation: DataTypes.DECIMAL(12,2),
-    specifications: DataTypes.TEXT
+    drawingId: {
+      type: DataTypes.UUID,
+      allowNull: false
+    },
+    name: {
+      type: DataTypes.TEXT,
+      allowNull: false
+    },
+    commercialValuation: {
+      type: DataTypes.DECIMAL(12,2),
+      allowNull: false
+    },
+    specifications: {
+      type: DataTypes.TEXT,
+      allowNull: false 
+    }
   }, {
     sequelize,
     modelName: 'Prize',
